@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.grid')
+    const scoreDisplay = document.getElementById('score')
     const width = 8
     const squares = []
     let score = 0
@@ -106,6 +107,12 @@ let squareIdBeingReplaced
             if (squares[i + width].style.backgroundColor === '' ) {
                 squares[i +width].style.backgroundColor = squares[i].style.backgroundColor
                 squares[i].style.backgroundColor = ''
+                const firstRow = [0, 1, 2, 3, 4, 5, 6, 7]
+                const isFirstRow = firstRow.includes(i)
+                if (isFirstRow && squares[i].style.backgroundColor === '') {
+                    let randomColor = Math.floor(Math.random() * candyColors.length)
+                    squares[i].style.backgroundColor = candyColors[randomColor]
+                }
             }
         }
     }
@@ -123,6 +130,7 @@ let squareIdBeingReplaced
 
             if (rowOfThree.every(index => squares[index].style.backgroundColor === decidedColor && !isBlank)){
                 score += 3
+                scoreDisplay.innerHTML = score
                 rowOfThree.forEach(index => {
                     squares[index].style.backgroundColor = ''
                 }) 
@@ -143,6 +151,7 @@ let squareIdBeingReplaced
 
             if (columnOfThree.every(index => squares[index].style.backgroundColor === decidedColor && !isBlank)){
                 score += 3
+                scoreDisplay.innerHTML = score
                 columnOfThree.forEach(index => {
                     squares[index].style.backgroundColor = ''
                 }) 
