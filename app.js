@@ -97,12 +97,29 @@ let squareIdBeingReplaced
         } else squares[squareIdBeingDragged].style.backgroundColor = colorBeingDragged
     }
 
+
+    //drop candies once some cleared.
+    function moveDown() {
+        //check squares up to 55
+        for (i = 0; i < 55; i++) {
+           //index number + width and passing it through squares array
+            if (squares[i + width].style.backgroundColor === '' ) {
+                squares[i +width].style.backgroundColor = squares[i].style.backgroundColor
+                squares[i].style.backgroundColor = ''
+            }
+        }
+    }
+
+
     //checking for matches, row of three.
     function checkRowForThree() {
         for (i = 0; i < 61; i++) {
             let rowOfThree = [i, i+1, i+2]
             let decidedColor = squares[i].style.backgroundColor
             const isBlank = squares[i].style.backgroundColor === ''
+            //stops rows of three breaking up but still being valid
+            const notValid = [6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55]
+            if (notValid.includes(i)) continue
 
             if (rowOfThree.every(index => squares[index].style.backgroundColor === decidedColor && !isBlank)){
                 score += 3
@@ -118,6 +135,7 @@ let squareIdBeingReplaced
 
     //checking for matches, column of three
     function checkColumnForThree() {
+        //stopping loop at square 47, stops them going through the bottom
         for (i = 0; i < 47; i++) {
             let columnOfThree = [i, i+width, i+width*2]
             let decidedColor = squares[i].style.backgroundColor
@@ -135,6 +153,7 @@ let squareIdBeingReplaced
     checkColumnForThree()
 
     window.setInterval(function(){
+        moveDown()
         checkRowForThree()
         checkColumnForThree()
     }, 100)
