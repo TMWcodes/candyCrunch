@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.grid')
     const width = 8
     const squares = []
+    let score = 0
 
     const candyColors = [
         'red',
@@ -94,8 +95,30 @@ let squareIdBeingReplaced
             squares[squareIdBeingReplaced].style.backgroundColor = colorBeingReplaced
             squares[squareIdBeingDragged].style.backgroundColor = colorBeingDragged
         } else squares[squareIdBeingDragged].style.backgroundColor = colorBeingDragged
-
     }
+
+    //checking for matches, row of three.
+    function checkRowForThree() {
+        for (i = 0; i < 61; i++) {
+            let rowOfThree = [i, i+1, i+2]
+            let decidedColor = squares[i].style.backgroundColor
+            const isBlank = squares[i].style.backgroundColor === ''
+
+            if (rowOfThree.every(index => squares[index].style.backgroundColor === decidedColor && !isBlank)){
+                score += 3
+                rowOfThree.forEach(index => {
+                    squares[index].style.backgroundColor = ''
+                }) 
+            }
+        }
+    }
+
+    checkRowForThree()
+
+
+
+
+
 
 
 
