@@ -115,6 +115,10 @@ let squareIdBeingReplaced
 
     checkRowForThree()
 
+    window.setInterval(function(){
+        checkRowForThree()
+    }, 100)
+
 
 
 
