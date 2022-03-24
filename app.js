@@ -78,5 +78,26 @@ let squareIdBeingReplaced
     function dragEnd() {
         console.log(this.id, 'dragend')
         this.style.backgroundColor = colorBeingReplaced 
-       }
+        // one up or down, one left or right
+        let validMoves = [
+            squareIdBeingDragged -1, 
+            squareIdBeingDragged -width,
+            squareIdBeingDragged +1, 
+            squareIdBeingDragged +width,
+        ]
+        //if number passed through is in valid moves array, statement is true
+        let validMove = validMoves.includes(squareIdBeingReplaced)
+
+        if (squareIdBeingReplaced && validMove) {
+            squareIdBeingReplaced = null
+        } else if (squareIdBeingReplaced && !validMove) {
+            squares[squareIdBeingReplaced].style.backgroundColor = colorBeingReplaced
+            squares[squareIdBeingDragged].style.backgroundColor = colorBeingDragged
+        } else squares[squareIdBeingDragged].style.backgroundColor = colorBeingDragged
+
+    }
+
+
+
 })
+
